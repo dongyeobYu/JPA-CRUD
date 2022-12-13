@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,9 +34,13 @@ public class MemberService {
 
     @Transactional
     public void updateMember(Long memberId, String password, Address address){
+
         Optional<Member> member = memberRepository.findById(memberId);
         member.get().changMember(password, address);
+    }
 
+    public boolean isMe(Long memberId, Long authentiId){
+        return Objects.equals(memberId, authentiId);
     }
 
 

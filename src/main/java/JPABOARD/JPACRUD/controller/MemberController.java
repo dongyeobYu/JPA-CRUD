@@ -55,6 +55,11 @@ public class MemberController {
      */
     @GetMapping("/member-list")
     public String memberList(Model model) {
+//        Member member = memberRepository.findByNickname(authentication.nickname);
+//        Long id = member.getId();
+//        model.addAttribute("isMember");
+
+
         model.addAttribute("members", memberRepository.findAll());
         return "members/memberList";
     }

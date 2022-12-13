@@ -43,4 +43,10 @@ public class Member {
         this.nickname = nickname;
         this.password = password;
     }
+
+    public void changMember(String password, Address address){
+        this.password = password;
+        this.address = address;
+    }
+
 }

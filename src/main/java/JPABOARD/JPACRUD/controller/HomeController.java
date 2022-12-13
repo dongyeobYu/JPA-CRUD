@@ -1,13 +1,13 @@
-package JPABOARD.JPACRUD;
+package JPABOARD.JPACRUD.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HelloController {
+public class HomeController {
 
     @GetMapping("/")
-    public String hello(){
-        return "hello";
+    public String home(){
+        return "home";
     }
 }

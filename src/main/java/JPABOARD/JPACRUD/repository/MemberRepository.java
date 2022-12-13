@@ -1,33 +1,14 @@
 package JPABOARD.JPACRUD.repository;
 
 import JPABOARD.JPACRUD.domain.Member;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
-@Repository
-@RequiredArgsConstructor
-public class MemberRepository {
+public interface MemberRepository  extends JpaRepository<Member, Long> {
 
-    private final EntityManager em;
+    List<Member> findAllByNickname(String nickname);
 
-    public void save(Member member){
-        em.persist(member);
-    }
-
-    public Member findOne(Long id){
-        return em.find(Member.class, id);
-    }
-
-    public List<Member> findAll(){
-        return em.createQuery("select m from Member m", Member.class).getResultList();
-    }
-
-    public List<Member> findByName(String nickname){
-        return em.createQuery("select m from Member m where m.nickname = :nickname ", Member.class)
-                .setParameter("nickname", nickname).getResultList();
-    }
+//    @Override
+//    <S extends Member> S save(S entity);
 }

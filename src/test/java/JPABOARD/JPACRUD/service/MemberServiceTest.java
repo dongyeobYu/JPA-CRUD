@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -35,7 +37,7 @@ public class MemberServiceTest {
         Long savedId = memberService.join(member);
 
         em.flush();
-        assertEquals(member, memberRepository.findOne(savedId));
+        assertEquals(member, memberRepository.findById(savedId).get());
     }
 
     @Test
@@ -52,6 +54,21 @@ public class MemberServiceTest {
         }
 
         Assert.fail("예외 발생 필요");
+    }
+
+    @Test
+    public void 회원_탈퇴_테스트() throws Exception{
+        Member member1 = new Member("동엽", "asdf", "!234");
+
+        Long savedId = memberService.join(member1);
+
+        assertTrue(!memberRepository.findAll().isEmpty());
+
+        memberRepository.deleteById(savedId);
+
+        List<Member> all = memberRepository.findAll();
+
+        assertTrue(memberRepository.findAll().isEmpty());
     }
 
 }

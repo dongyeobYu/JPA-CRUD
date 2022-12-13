@@ -15,6 +15,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Long join(Member member){
         validMember(member);
         memberRepository.save(member);
@@ -22,10 +23,12 @@ public class MemberService {
     }
 
     private void validMember(Member member) {
-        List<Member> byName = memberRepository.findByName(member.getNickname());
+        List<Member> byName = memberRepository.findAllByNickname(member.getNickname());
         if(!byName.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
+
+
 
 }

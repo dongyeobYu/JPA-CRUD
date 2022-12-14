@@ -27,9 +27,12 @@
                 <td th:text="${member.address?.street}"></td>
                 <td th:text="${member.address?.zipcode}"></td>
 <!--                시큐리티 적용후 탈퇴 버튼 만들기 th:if="isMe" -->
-                <td><button class="btn btn-primary" onclick="location.href='/member/'+ ${member.id} +'/updateMember'">수정</button></td>
-                <td><button class="btn btn-primary">삭제</button></td>
-
+                <td><button class="btn btn-primary"><a th:href="@{/member/{id}/updateMember (id = ${member.id})}" style="color: white; text-decoration-line: none">수정</a></button></td>
+                <td>
+                    <form th:action="@{/member/{id}/delete (id = ${member.id})}" method="post">
+                    <button class="btn btn-primary" type="submit">삭제</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -25,5 +25,6 @@ public class MemberForm {
     private String city;
     private String zipcode;
     private String street;
+    private Long id;
 
 }

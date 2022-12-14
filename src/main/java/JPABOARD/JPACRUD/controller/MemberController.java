@@ -87,7 +87,8 @@ public class MemberController {
                 member.get().getPassword(),
                 address.getCity(),
                 address.getZipcode(),
-                address.getStreet());
+                address.getStreet(),
+                member.get().getId());
 
         model.addAttribute("form", form);
         return "members/memberUpdateForm";
@@ -100,6 +101,6 @@ public class MemberController {
     public String memberUpdate(@PathVariable("memberId") Long memberId, @ModelAttribute("form") MemberForm form){
         Address address = new Address(form.getStreet(), form.getZipcode(), form.getCity());
         memberService.updateMember(memberId, form.getPassword(), address);
-        return "redirect:/memberList";
+        return "redirect:/member-list";
     }
 }

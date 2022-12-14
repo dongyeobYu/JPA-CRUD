@@ -2,6 +2,7 @@ package JPABOARD.JPACRUD.service;
 
 import JPABOARD.JPACRUD.domain.Member;
 import JPABOARD.JPACRUD.repository.MemberRepository;
+import JPABOARD.JPACRUD.security.Role;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,18 +33,18 @@ public class MemberServiceTest {
 
     @Test
     public void 회원가입테스트() throws Exception{
-        Member member = new Member("동엽", "asdf", "1234");
+        Member member = new Member("동엽", "asdf", "1234", Role.ROLE_USER);
 
         Long savedId = memberService.join(member);
 
         em.flush();
-        assertEquals(member,                                 memberRepository.findById(savedId).get());
+        assertEquals(member, memberRepository.findById(savedId).get());
     }
 
     @Test
     public void 중복_회원_체크() throws Exception{
-        Member member1 = new Member("동엽", "asdf", "1234");
-        Member member2 = new Member("kim", "asdf", "1234");
+        Member member1 = new Member("동엽", "asdf", "1234", Role.ROLE_USER);
+        Member member2 = new Member("kim", "asdf", "1234", Role.ROLE_USER);
 
         memberService.join(member1);
 
@@ -58,7 +59,7 @@ public class MemberServiceTest {
 
     @Test
     public void 회원_탈퇴_테스트() throws Exception{
-        Member member1 = new Member("동엽", "asdf", "!234");
+        Member member1 = new Member("동엽", "asdf", "!234", Role.ROLE_USER);
 
         Long savedId = memberService.join(member1);
 

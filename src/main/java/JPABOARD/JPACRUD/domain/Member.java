@@ -1,8 +1,10 @@
 package JPABOARD.JPACRUD.domain;
 
+import JPABOARD.JPACRUD.security.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,27 +27,37 @@ public class Member {
 
     private String password;
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "member")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
+    private Role role;
+
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Post> posts = new ArrayList<>();
 
-    public Member(String name, String nickname, String password, Address address) {
+    public Member(String name, String nickname, String password, Address address, Role role) {
         this.name = name;
         this.nickname = nickname;
         this.password = password;
         this.address = address;
+        this.role = role;
     }
 
-    public Member(String name, String nickname, String password) {
+    public Member(String name, String nickname, String password, Role role) {
         this.name = name;
         this.nickname = nickname;
         this.password = password;
+        this.role = role;
     }
 
-    public void changMember(String password, Address address){
-        this.password = password;
+    public void changMember(Address address){
         this.address = address;
     }
 

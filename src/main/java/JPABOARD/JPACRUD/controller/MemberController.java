@@ -3,6 +3,7 @@ package JPABOARD.JPACRUD.controller;
 import JPABOARD.JPACRUD.domain.Address;
 import JPABOARD.JPACRUD.domain.Member;
 import JPABOARD.JPACRUD.repository.MemberRepository;
+import JPABOARD.JPACRUD.security.Role;
 import JPABOARD.JPACRUD.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,11 @@ public class MemberController {
         return "members/new-member";
     }
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
+
     /**
      * 회원 가입
      */
@@ -44,7 +50,7 @@ public class MemberController {
         }
 
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
-        Member member = new Member(memberForm.getName(), memberForm.getNickname(), memberForm.getPassword(), address);
+        Member member = new Member(memberForm.getName(), memberForm.getNickname(), memberForm.getPassword(), address, Role.ROLE_USER);
 
         memberService.join(member);
         return "redirect:/";

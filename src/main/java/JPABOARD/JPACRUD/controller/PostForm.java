@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class PostForm {
 
-    @NotEmpty(message = "작성자는 꼭 입력해야합니다.")
     private String writer;
 
     @NotEmpty(message = "제목은 꼭 입력해야합니다.")

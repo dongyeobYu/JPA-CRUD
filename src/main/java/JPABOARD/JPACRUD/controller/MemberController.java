@@ -3,10 +3,12 @@ package JPABOARD.JPACRUD.controller;
 import JPABOARD.JPACRUD.domain.Address;
 import JPABOARD.JPACRUD.domain.Member;
 import JPABOARD.JPACRUD.repository.MemberRepository;
+import JPABOARD.JPACRUD.security.MemberDetails;
 import JPABOARD.JPACRUD.security.Role;
 import JPABOARD.JPACRUD.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,11 +62,10 @@ public class MemberController {
      * 회원 리스트 목록
      */
     @GetMapping("/member-list")
-    public String memberList(Model model) {
-//        Member member = memberRepository.findByNickname(authentication.nickname);
-//        Long id = member.getId();
-//        model.addAttribute("isMember");
-
+    public String memberList(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
+        if(memberDetails != null){
+            model.addAttribute("isMe", memberRepository.findByNickname(memberDetails.getMember().getNickname()).getId());
+        }
 
         model.addAttribute("members", memberRepository.findAll());
         return "members/memberList";

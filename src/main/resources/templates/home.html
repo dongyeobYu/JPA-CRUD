@@ -21,10 +21,12 @@
       <a class="btn btn-lg btn-secondary" href="/post/new">게시글 등록</a>
       <a class="btn btn-lg btn-secondary" href="/post/postList">게시글 목록</a>
     </p>
-<!--    <p class="lead">주문 기능</p>-->
+    <p class="lead">활동내역 보기</p>
 <!--    <p>-->
-<!--      <a class="btn btn-lg btn-info" href="/order">상품 주문</a>-->
-<!--      <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>-->
+<!--      <a class="btn btn-lg btn-secondary" th:href="@{/comment/{id}/list (id = ${member.id})}">자기 댓글 내역</a>-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      <a class="btn btn-lg btn-secondary" th:href="@{/comment/{id}/list (id = ${member.id})}">자기 게시글 내역</a>-->
 <!--    </p>-->
   </div>
   <div th:replace="fragments/footer :: footer" />

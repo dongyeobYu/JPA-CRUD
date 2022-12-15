@@ -4,8 +4,11 @@ import JPABOARD.JPACRUD.domain.Member;
 import JPABOARD.JPACRUD.domain.Post;
 import JPABOARD.JPACRUD.repository.MemberRepository;
 import JPABOARD.JPACRUD.repository.PostRepository;
+import JPABOARD.JPACRUD.security.MemberDetails;
+import JPABOARD.JPACRUD.service.MemberService;
 import JPABOARD.JPACRUD.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,6 +28,8 @@ public class PostController {
     private final PostService postService;
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
+
 
     @GetMapping("/post/new")
     public String postPage(Model model) {
@@ -32,13 +38,12 @@ public class PostController {
     }
 
     @PostMapping("/post/new")
-    public String writePost(@Valid PostForm postForm, BindingResult bindingResult) {
+    public String writePost(@Valid PostForm postForm, BindingResult bindingResult, @AuthenticationPrincipal MemberDetails memberDetails, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "post/new";
         }
-
-        Member member = memberRepository.findByNickname(postForm.getWriter());
+        Member member = memberRepository.findByNickname(memberDetails.getMember().getNickname());
         Post post = new Post(member, postForm.getTitle(), postForm.getContent());
         postService.write(post);
         return "redirect:/";
@@ -46,8 +51,11 @@ public class PostController {
 
 
     @GetMapping("/post/postList")
-    public String postListPage(Model model) {
-        model.addAttribute("posts", postRepository.findAll());
+    public String postListPage(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
+        List<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
+        model.addAttribute("isMe", memberDetails.getMember().getId());
+
         return "post/postList";
     }
 
@@ -73,8 +81,17 @@ public class PostController {
     }
 
     @PostMapping("/post/{postId}/delete")
-    public String deletePost(@PathVariable("postId") Long postId){
+    public String deletePost(@PathVariable("postId") Long postId) {
         postRepository.deleteById(postId);
         return "post/postList";
+    }
+
+    @GetMapping("/post/{id}/page")
+    public String postPage(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MemberDetails memberDetails){
+        Optional<Post> post = postRepository.findById(id);
+        model.addAttribute("member", memberRepository.findByNickname(memberDetails.getMember().getNickname()));
+        model.addAttribute("post", post.get());
+        return "post/postPage";
+
     }
 }

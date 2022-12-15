@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name = "comment")
@@ -22,10 +23,18 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post postId;
 
-    private String writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member memberId;
 
     private String comment;
 
     private LocalDateTime localDateTime;
 
+    public Comment(Post postId, Member memberId, String comment) {
+        this.postId = postId;
+        this.memberId = memberId;
+        this.comment = comment;
+        this.localDateTime = LocalDateTime.now().withNano(0);
+    }
 }

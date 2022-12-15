@@ -2,6 +2,7 @@ package JPABOARD.JPACRUD.controller;
 
 import JPABOARD.JPACRUD.domain.Member;
 import JPABOARD.JPACRUD.domain.Post;
+import JPABOARD.JPACRUD.repository.CommentRepository;
 import JPABOARD.JPACRUD.repository.MemberRepository;
 import JPABOARD.JPACRUD.repository.PostRepository;
 import JPABOARD.JPACRUD.security.MemberDetails;
@@ -29,6 +30,7 @@ public class PostController {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
+    private final CommentRepository commentRepository;
 
 
     @GetMapping("/post/new")
@@ -91,6 +93,8 @@ public class PostController {
         Optional<Post> post = postRepository.findById(id);
         model.addAttribute("member", memberRepository.findByNickname(memberDetails.getMember().getNickname()));
         model.addAttribute("post", post.get());
+        model.addAttribute("comment", commentRepository.findAll());
+        model.addAttribute("isMe", memberDetails.getMember().getId());
         return "post/postPage";
 
     }

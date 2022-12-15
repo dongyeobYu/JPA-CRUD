@@ -37,4 +37,8 @@ public class Comment {
         this.comment = comment;
         this.localDateTime = LocalDateTime.now().withNano(0);
     }
+
+    public void Comment(String comment){
+        this.localDateTime = LocalDateTime.now().withNano(0);
+    }
 }

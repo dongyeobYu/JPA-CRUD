@@ -10,11 +10,11 @@
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <div class="form-group">
-      <label th:for="title">제목</label>
-      <text th:text="${post.title}"></text>
+  <div class="form-group">
+    <label th:for="title">제목</label>
+    <text th:text="${post.title}"></text>
 
-    </div>
+  </div>
 
   <div class="form-group">
     <label th:for="content">내용</label>
@@ -25,14 +25,42 @@
   <form type="form" th:action="@{/post/{id}/comment (id = ${post.id})}" method="post">
     <input hidden="hidden" id="memberId" name="memberId" th:text="${member.nickname}" th:value="${member.id}"/>
     <input hidden="hidden" id="postId" name="postId" th:value="${post.id}"/>
-
     <input type="text" id="content" name="content">
     <button type="submit" class="btn btn-primary">작성</button>
   </form>
 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성일시</th>
+      </tr>
+    </thead>
 
-  <br/>
-  <div th:replace="fragments/footer :: footer" />
+    <tbody>
+      <tr th:each="comment : ${comment}">
+        <td th:text="${comment.getMemberId().getNickname()}"></td>
+        <td th:field="${comment.getId()}" th:text="${comment.getComment()}"></td>
+        <td th:text="${comment.getLocalDateTime()}"></td>
+
+        <th:block th:if="${isMe} == ${comment.getMemberId()}">
+          <td><button class="btn btn-primary" >수정</button></td>
+          <td>
+            <form th:action="@{/comment/{id}/delete (id = ${comment.getId()})}" method="post">
+              <button class="btn btn-primary" type="submit">삭제</button>
+            </form>
+          </td>
+        </th:block>
+
+      </tr>
+    </tbody>
+  </table>
+
+    <br/>
+    <div th:replace="fragments/footer :: footer"/>
+  </tr>
+  </tbody>
 </div> <!-- /container -->
 </body>
 </html>

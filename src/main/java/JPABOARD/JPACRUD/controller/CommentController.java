@@ -46,9 +46,14 @@ public class CommentController {
     }
 
     @PostMapping("/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable("commentId") Long commentId) {
+    public Integer deleteComment(@PathVariable("commentId") Long commentId) {
         Long id = commentRepository.findById(commentId).get().getPostId().getId();
-        commentRepository.deleteById(commentId);
-        return "redirect:/post/" + id + "/page";
+        if(id != null) {
+            commentRepository.deleteById(commentId);
+            return 1;
+        } else{
+            return 0;
+        }
+
     }
 }

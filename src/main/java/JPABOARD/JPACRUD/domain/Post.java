@@ -22,7 +22,7 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -32,12 +32,22 @@ public class Post {
 
     private LocalDateTime localDateTime;
 
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+
+    // 연관관계 편의 메서드
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPosts().add(this);
+    }
+
     public Post(Member member, String title, String content) {
         this.member = member;
         this.title = title;
         this.content = content;
         this.localDateTime = LocalDateTime.now().withNano(0);
     }
+
 
     public void changePost(String title, String content){
         this.title = title;

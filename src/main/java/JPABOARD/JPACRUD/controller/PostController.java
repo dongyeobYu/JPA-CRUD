@@ -91,10 +91,11 @@ public class PostController {
     @GetMapping("/post/{id}/page")
     public String postPage(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MemberDetails memberDetails){
         Optional<Post> post = postRepository.findById(id);
-        model.addAttribute("member", memberRepository.findByNickname(memberDetails.getMember().getNickname()));
-        model.addAttribute("post", post.get());
+        model.addAttribute("member", memberRepository.findById(memberDetails.getMember().getId()));
+        model.addAttribute("post", post);
         model.addAttribute("comment", commentRepository.findAll());
         model.addAttribute("isMe", memberDetails.getMember().getId());
+
         return "post/postPage";
 
     }

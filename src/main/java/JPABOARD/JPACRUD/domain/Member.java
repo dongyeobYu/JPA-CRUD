@@ -39,8 +39,11 @@ public class Member {
     private Role role;
 
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany
     private List<Post> posts = new ArrayList<>();
+
+//    @OneToMany(fetch = FetchType.LAZY)
+//    private List<Comment> comments = new ArrayList<>();
 
     public Member(String name, String nickname, String password, Address address, Role role) {
         this.name = name;

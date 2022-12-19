@@ -43,18 +43,18 @@
 
     <tbody>
       <tr th:each="comment : ${comment}">
-        <td th:text="${comment.get(commentStat.index).getMemberId().getNickname()}"></td>
-        <td th:field="${comment.get(commentStat.index).getId()}" th:text="${comment.get(commentStat.index).getComment()}"></td>
-        <td th:text="${comment.get(commentStat.index).getLocalDateTime()}"></td>
+        <td th:text="${comment.getMemberId().getNickname()}"></td>
+        <td th:field="${comment.getId()}" th:text="${comment.getComment()}"></td>
+        <td th:text="${comment.getLocalDateTime()}"></td>
 
-<!--        <th:block th:if="${isMe} == ${comment.getMemberId()}">-->
-<!--          <td><button class="btn btn-primary" >수정</button></td>-->
-<!--          <td>-->
-<!--&lt;!&ndash;            <form th:action="@{/comment/{id}/delete (id = ${comment.getId()})}" method="post">&ndash;&gt;-->
-<!--              <button class="btn btn-primary" th:id="${comment.getId()}" onclick="deleteComment(this.id)">삭제</button>-->
-<!--&lt;!&ndash;            </form>&ndash;&gt;-->
-<!--          </td>-->
-<!--        </th:block>-->
+        <th:block th:if="${isMe} == ${comment.getMemberId().getId()}">
+          <td><button class="btn btn-primary" >수정</button></td>
+          <td>
+            <form th:action="@{/comment/{id}/delete (id = ${comment.getId()})}" method="post">
+              <button class="btn btn-primary" th:id="${comment.getId()}">삭제</button>
+            </form>
+          </td>
+        </th:block>
 
       </tr>
     </tbody>

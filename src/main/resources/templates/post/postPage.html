@@ -40,7 +40,9 @@
         <td th:text="${comment.getLocalDateTime()}"></td>
 
         <th:block th:if="${isMe} == ${comment.getMemberId().getId()}">
-          <td><button class="btn btn-primary" >수정</button></td>
+
+          <td><button class="btn btn-primary">수정</button></td>
+
           <td>
             <form th:action="@{/comment/{id}/delete (id = ${comment.getId()})}" method="post">
               <button class="btn btn-primary" th:id="${comment.getId()}">삭제</button>

@@ -32,7 +32,7 @@ public class Post {
 
     private LocalDateTime localDateTime;
 
-    @OneToMany
+    @OneToMany(mappedBy = "postId")
     private List<Comment> comments = new ArrayList<>();
 
     // 연관관계 편의 메서드

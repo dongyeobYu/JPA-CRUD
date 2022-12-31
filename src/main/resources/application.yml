@@ -3,7 +3,7 @@ Spring:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:tcp://localhost/~/jpaboard
     username: sa
-    password:
+    password: 1
   h2:
     console:
       enabled: true
@@ -12,7 +12,7 @@ Spring:
 
   jpa:
     hibernate:
-      ddl-auto: none # application ?? ??? ?? ??? ?? ??
+      ddl-auto: create # application ?? ??? ?? ??? ?? ??
     properties:
       hibernate:
         format_sql: true

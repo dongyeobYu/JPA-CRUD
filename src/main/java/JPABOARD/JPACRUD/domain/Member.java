@@ -44,8 +44,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "memberId")
+    private List<Comment> comments = new ArrayList<>();
 
     public Member(String name){
         this.name = name;

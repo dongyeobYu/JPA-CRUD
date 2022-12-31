@@ -72,4 +72,9 @@ public class MemberServiceTest {
         assertTrue(memberRepository.findAll().isEmpty());
     }
 
+    @Test
+    public void TEst() throws Exception{
+        System.out.println("member1 == member2 = true");
+    }
+
 }

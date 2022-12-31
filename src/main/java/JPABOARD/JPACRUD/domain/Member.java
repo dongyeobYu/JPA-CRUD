@@ -4,6 +4,7 @@ import JPABOARD.JPACRUD.security.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
@@ -39,11 +41,15 @@ public class Member {
     private Role role;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
 //    @OneToMany(fetch = FetchType.LAZY)
 //    private List<Comment> comments = new ArrayList<>();
+
+    public Member(String name){
+        this.name = name;
+    }
 
     public Member(String name, String nickname, String password, Address address, Role role) {
         this.name = name;

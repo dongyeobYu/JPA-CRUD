@@ -2,6 +2,7 @@ package JPABOARD.JPACRUD.controller;
 
 import JPABOARD.JPACRUD.domain.Address;
 import JPABOARD.JPACRUD.domain.Member;
+import JPABOARD.JPACRUD.domain.Post;
 import JPABOARD.JPACRUD.repository.MemberRepository;
 import JPABOARD.JPACRUD.security.MemberDetails;
 import JPABOARD.JPACRUD.security.Role;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -109,5 +112,13 @@ public class MemberController {
         Address address = new Address(form.getStreet(), form.getZipcode(), form.getCity());
         memberService.updateMember(memberId, form.getPassword(), address);
         return "redirect:/member-list";
+    }
+
+    @GetMapping("/members/memberPostList/{memberId}")
+    public String memberPostList(@PathVariable("memberId") Long memberId, Model model) throws Exception {
+        Optional<Member> member = memberRepository.findById(memberId);
+        List<Post> posts = member.orElseThrow(()->new Exception("result null")).getPosts();
+        model.addAttribute("posts", posts);
+        return "members/memberPostList";
     }
 }

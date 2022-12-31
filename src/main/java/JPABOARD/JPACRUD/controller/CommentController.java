@@ -38,22 +38,17 @@ public class CommentController {
         return "redirect:/post/" + id + "/page";
     }
 
-    @PostMapping("/post/{id}/{commentId}/update")
-    public String updateComment(@PathVariable("id") Long id, @PathVariable("commentId") Long commentId, @ModelAttribute("form") CommentForm commentForm, @AuthenticationPrincipal MemberDetails memberDetails) {
+    @PostMapping("/comment/{commentId}/update")
+    public String updateComment(@PathVariable("commentId") Long commentId, @ModelAttribute("form") CommentForm commentForm, @AuthenticationPrincipal MemberDetails memberDetails) {
         Optional<Comment> byId = commentRepository.findById(commentId);
         commentService.updateComment(byId.get().getId(), commentForm.getContent());
-        return "redirect:/post/" + id + "/page";
+        return "redirect:/post/" + byId.get().getPostId() + "/page";
     }
 
     @PostMapping("/comment/{commentId}/delete")
-    public Integer deleteComment(@PathVariable("commentId") Long commentId) {
+    public String deleteComment(@PathVariable("commentId") Long commentId) {
         Long id = commentRepository.findById(commentId).get().getPostId().getId();
-        if(id != null) {
-            commentRepository.deleteById(commentId);
-            return 1;
-        } else{
-            return 0;
-        }
-
+        commentRepository.deleteById(commentId);
+        return "redirect:/post/" + id + "/page";
     }
 }

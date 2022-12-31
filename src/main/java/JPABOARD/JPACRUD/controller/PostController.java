@@ -57,6 +57,7 @@ public class PostController {
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
         model.addAttribute("isMe", memberDetails.getMember().getId());
+        model.addAttribute("member", memberDetails.getMember().getNickname());
 
         return "post/postList";
     }

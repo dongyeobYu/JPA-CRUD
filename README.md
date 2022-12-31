@@ -1,18 +1,33 @@
-# JPA-CRUD
-Jpa 를 이용한 기본 CRUD 게시판
+# JPA를 이용한 게시판
 
+# 프로젝트 설명
 Spring Boot, JPA 를 공부하기 위해 만든 프로젝트 입니다.
-별 다른 기능없이 기본기를 위주로 만들었습니다.
+기본적인 게시판을 둘러볼수 있습니다.
 
-기능
-  1. 회원 가입 v
-  2. 회원 수정 v
-  3. 회원 탈퇴 v
-  4. 게시글 작성 v
-  5. 게시글 수정 v
-  6. 게시글 삭제 v
-  7. 댓글 작성 v
-  8. 댓글 수정
-  9. 댓글 삭제
+## 개발환경
++ IntelliJ IDEA
++ Java 11
++ Spring Boot 2.7.6
+
+## 기술 세부 스택
++ Spring Web
++ Spring Data JPA
++ Thymeleaf
++ H2 Database
++ Lombok
++ Spring Security
++ BootStrap
+
+
+## 기능
++ 회원 가입
++ 회원 수정
++ 회원 탈퇴
++ 게시글 작성
++ 게시글 수정
++ 게시글 삭제
++ 댓글 작성
++ 댓글 수정
++ 댓글 삭제
 
 
